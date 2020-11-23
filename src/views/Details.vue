@@ -130,6 +130,13 @@
     created() {
       this.currentWarehouse = this.$store.getters.getWarehouseById(this.$route.params.id)
       this.userData = JSON.parse(JSON.stringify(this.currentWarehouse))
+    },
+    beforeRouteLeave(to, from, next) {
+      let answer = true;
+      if(this.editMode) {
+        answer = confirm("Do you really want to leave? Edited stuff won't be saved")
+      }
+      (answer)? next(): next(false)
     }
   }
 

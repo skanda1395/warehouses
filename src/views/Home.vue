@@ -28,6 +28,19 @@
 
       <hr>
 
+      <!-- Live Filter  -->
+      <p class="filterTitle">Is Live?</p>
+      <div id="live_filter">
+        <input type="radio" name="live_status" id="yes" value="1" v-model.number="liveStatus">
+        <label for="yes">Yes</label>
+        <input type="radio" name="live_status" id="no" value="0" v-model.number="liveStatus">
+        <label for="no">No</label>
+        <input type="radio" name="live_status" id="both" value="both" v-model="liveStatus" >
+        <label for="both">Both</label>
+      </div>
+
+      <hr>
+
       <!-- Space Availablity Filter -->
       <p class="filterTitle">Space Availablity</p>
       <div id="space_filter">
@@ -73,6 +86,7 @@ export default {
       searchTerm: "",
       checkedCities: [],
       checkedClusters: [],
+      liveStatus: "both",
       space: 1,
     }
   },
@@ -104,7 +118,8 @@ export default {
         let cityResult = (!this.checkedCities.length)? true: this.checkedCities.includes(warehouse.city);
         let clusterResult = (!this.checkedClusters.length)? true: this.checkedClusters.includes(warehouse.cluster);
         let spaceResult = warehouse.space_available >= this.space 
-        return searchResult && cityResult && clusterResult && spaceResult
+        let liveStatusResult = (this.liveStatus == "both")? true : (this.liveStatus == !!warehouse.is_live)
+        return searchResult && cityResult && clusterResult && spaceResult && liveStatusResult
       })
     },
   },
@@ -140,12 +155,13 @@ export default {
     margin: auto
   }
 
-  .checkbox_list li input {
-    margin-right: 7px;
+  .checkbox_list li input, #live_filter input {
+    margin-right: 5px;
   }
   
-  #space_filter {
+  #space_filter, #live_filter {
     text-align: center;
+    margin-left: -10px; 
   }
 
   main {

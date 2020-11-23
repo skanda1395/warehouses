@@ -74,6 +74,8 @@
           </div>
         </router-link>
       </ul>
+
+      <h3 v-if="!filteredWarehouseList.length">Warehouse(s) not found 😐. Try changing filters on the left.</h3>
     </main>
 
   </div>
